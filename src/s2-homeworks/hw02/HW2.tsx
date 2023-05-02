@@ -17,7 +17,7 @@ import s2 from '../../s1-main/App.module.css'
 * */
 
 // types
-export type AffairPriorityType =  'low' | 'middle' | 'high'
+export type AffairPriorityType = 'low' | 'middle' | 'high'
 export type AffairType = {
     _id: number
     name: string
@@ -28,35 +28,35 @@ export type FilterType = 'all' | AffairPriorityType
 // constants
 const defaultAffairs: Array<AffairType> = [
     {_id: 1, name: 'React', priority: 'high'}, // студенты могут изменить содержимое name и количество элементов в массиве, ...priority не менять!
-    {_id: 2, name: 'anime', priority: 'low'},
-    {_id: 3, name: 'games', priority: 'low'},
-    {_id: 4, name: 'work', priority: 'high'},
-    {_id: 5, name: 'html & css', priority: 'middle'},
+    {_id: 2, name: 'Reading', priority: 'middle'},
+    {_id: 3, name: 'JavaScript', priority: 'high'},
+    {_id: 4, name: 'Movies', priority: 'low'},
+    {_id: 5, name: 'Work', priority: 'high'},
+    {_id: 6, name: 'HTML & CSS', priority: 'middle'}
 ]
 
 // pure helper functions
 export const filterAffairs = (affairs: Array<AffairType>, filter: FilterType): Array<AffairType> => {
-
-
-    return affairs // need to fix
+    if (filter === 'all') return affairs;
+    else if (filter === 'low') return affairs.filter(a => a.priority === "low");
+    else if (filter === 'middle') return affairs.filter(a => a.priority === "middle");
+    else return affairs.filter(a => a.priority === "high");
 }
 export const deleteAffair = (affairs: Array<AffairType>, _id: number): Array<AffairType> => {
-
-    return affairs // need to fix
+    return affairs.filter(a => a._id !== _id);
 }
 
 function HW2() {
-    const [affairs, setAffairs] = useState<Array<AffairType>>(defaultAffairs)
-    const [filter, setFilter] = useState<FilterType>('all')
+    const [affairs, setAffairs] = useState<Array<AffairType>>(defaultAffairs);
+    const [filter, setFilter] = useState<FilterType>('all');
 
-    const filteredAffairs = filterAffairs(affairs, filter)
-    const deleteAffairCallback = (_id: number) => {
-        // need to fix
-    }
+    const filteredAffairs = filterAffairs(affairs, filter);
+    const deleteAffairCallback = (_id: number) => setAffairs(deleteAffair(affairs, _id));
 
     return (
         <div id={'hw2'}>
             <div className={s2.hwTitle}>Homework #2</div>
+            <hr/>
             <div className={s2.hw}>
                 <Affairs
                     data={filteredAffairs}
